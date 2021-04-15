@@ -1,7 +1,9 @@
 class Node {
   constructor(value) {
+    // A NODE HAS A VALUE
+    // A NODE HAS A POINTER
+    // POINTING TO THE  NEXT NODE
     this.value = value;
-    this.prev = null;
     this.next = null;
   }
 
@@ -68,9 +70,46 @@ class LinkedList {
     this.size += 1;
   }
 
-  //  delete
+  //  delete by value
+  delete(value) {
+    if (this.head === null) return;
 
-  delete() {}
+    // start
+    if (value === this.head.value) {
+      /* steps:
+      -  initial state: head === a -> b -> c
+      -  delete a
+      -  make head point to b
+      - next state: head === b -> c */
+
+      this.head = this.head.next; // now head equals to b, a is nothing.
+
+      return;
+    }
+
+    // middle and end
+    // head === a -> b -> c -> d -> Null
+
+    let currentNode = this.head; // this.head is a node
+    // arr = [0 ,1 , 2 ,3 , 4, 64]
+    /*  
+    let i = 0;
+     while (arr[i] !== 4) {
+      i++
+     }
+    */
+
+    // if value is c.
+    // currentNode = a. a.next.value === b.
+
+    while (currentNode.next.value !== value) {
+      // currentNode = b;
+      currentNode = currentNode.next;
+    }
+    /*  b.next = d || currentNode.next = d */
+    // we deleted c.
+    currentNode.next = currentNode.next.next;
+  }
 
   // size
   getSize() {
@@ -80,17 +119,17 @@ class LinkedList {
   // print
   print() {
     let temp = this.head;
-    // let i = 0;
-    while (temp !== null) {
-      console.log(temp);
-      temp = temp.next;
-    }
+    let i = 0;
+    // while (temp !== null) {
+    //   console.log(temp);
+    //   temp = temp.next;
+    // }
 
-    //  while (temp !== null) {
-    //    console.log(`${i}: ${temp.value}`);
-    //    temp = temp.next;
-    //    i++;
-    //  }
+    while (temp !== null) {
+      console.log(`${i}: ${temp.value}`);
+      temp = temp.next;
+      i++;
+    }
   }
 }
 
@@ -105,5 +144,9 @@ ll.insert(['1', '2'], 6);
 ll.insert(JSON.stringify({ name: 'daniel', age: 21 }), 7);
 ll.insert('5', 100);
 ll.insert('4', 66);
+ll.insert([...new Array(6).keys()], 67);
+ll.print();
+ll.delete('4');
+ll.delete('a');
 
 ll.print();
